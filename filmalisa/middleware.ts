@@ -1,13 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+const PUBLIC_ROUTES = ['/', '/login', '/signup']
+
 export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl
   const token = req.cookies.get('filmalisa_token')?.value
+
+  if (token && (pathname === '/' || pathname === '/login')) {
+    return NextResponse.redirect(new URL('/movies', req.url))
+  }
+
+  if (PUBLIC_ROUTES.includes(pathname)) {
+    return NextResponse.next()
+  }
+
   if (!token) {
     return NextResponse.redirect(new URL('/login', req.url))
   }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!login|signup|api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }

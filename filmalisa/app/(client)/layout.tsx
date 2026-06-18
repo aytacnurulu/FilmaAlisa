@@ -1,16 +1,14 @@
-import LogoutButton from '@/shared/components/LogoutButton'
+import Navbar from "@/shared/components/ui/Navbar";
 
 export default function ClientLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
-      <header className="flex items-center justify-end px-6 py-3 border-b border-gray-200">
-        <LogoutButton />
-      </header>
-      {children}
+      <Navbar />
+      <main className="pt-16">{children}</main>
     </>
-  )
+  );
 }

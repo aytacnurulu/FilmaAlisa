@@ -218,16 +218,104 @@ Dashboard response shape:
 
 ```
 app/
-  (client)/            # public app routes
-  (admin)/             # admin panel routes
-  api/                 # BFF route handlers (read cookie, attach token, proxy)
+  (auth)/                        # unauthenticated route group
+    layout.tsx
+    login/page.tsx
+    signup/page.tsx
+  (client)/                      # authenticated client app routes
+    layout.tsx
+    page.tsx                     # landing page redirect
+    home/page.tsx
+    movies/
+      page.tsx
+      [id]/page.tsx              # movie detail
+    search/page.tsx
+    favorites/page.tsx
+    account/page.tsx
+  (admin)/                       # admin panel routes
+    layout.tsx
+    admin/
+      dashboard/page.tsx
+      movies/page.tsx
+      categories/page.tsx
+      actors/page.tsx
+      users/page.tsx
+      comments/page.tsx
+      contacts/page.tsx
+  api/                           # BFF route handlers (read cookie, attach token, proxy)
+    auth/
+      login/route.ts
+      signup/route.ts
+      logout/route.ts
+      admin-login/route.ts
+    movies/
+      route.ts
+      [id]/route.ts
+      [id]/comments/route.ts
+      [id]/comment/[commentId]/route.ts
+      [id]/favorite/route.ts
+      favorites/route.ts
+    categories/route.ts
+    contact/route.ts
+    profile/route.ts
+    admin/
+      dashboard/route.ts
+      movies/route.ts, [id]/route.ts, [id]/comment/[commentId]/route.ts
+      categories/route.ts, [id]/route.ts
+      actors/route.ts, [id]/route.ts
+      users/route.ts
+      contacts/route.ts, [id]/route.ts
+      comments/route.ts
   layout.tsx
+  page.tsx                       # root landing page (public)
+  not-found.tsx
+  globals.css
+  providers.tsx
 lib/
-  api/                 # typed API client functions + request wrapper
-  auth/                # cookie helpers, session utilities
-  validation/          # Yup schemas
-middleware.ts          # route protection (redirect if no token)
-components/            # shared UI
+  api/                           # typed API client functions + request wrapper
+    client.ts                    # base fetch wrapper (attaches Bearer token)
+    proxy.ts                     # server-side proxy helper
+    movies.ts
+    categories.ts
+    comment.ts
+    favorite.ts
+    contact.ts
+    profile.ts
+    index.ts
+  auth/
+    index.ts                     # cookie helpers, session utilities
+  types/                         # shared TypeScript types
+    movies.ts
+    category.ts
+    comment.ts
+    contact.ts
+    profile.ts
+  validation/
+    index.ts                     # Yup schemas
+middleware.ts                    # route protection (redirect if no token)
+shared/
+  components/
+    LogoutButton.tsx
+    ui/                          # reusable UI primitives
+      Accordion.tsx
+      Badge.tsx
+      Button.tsx
+      Card.tsx
+      Input.tsx
+      Logo.tsx
+      MovieCard.tsx
+      PasswordInput.tsx
+      Rating.tsx
+  data/
+    faq.ts
+  lib/
+    cn.ts                        # Tailwind class merger
+  motion.ts                      # shared Framer Motion variants
+public/
+  filmalisaBacground.jpg
+  landingpageImg1.svg
+  landingpageImg2.svg
+  landingpageImg3.svg
 ```
 
 ---

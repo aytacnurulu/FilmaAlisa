@@ -27,7 +27,7 @@ export const revealUp: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: dur.slow, ease: easeOut },
+    transition: { duration: 0.65, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
@@ -44,7 +44,7 @@ export const revealItem: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: dur.base, ease: easeOut },
+    transition: { duration: 0.65, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
@@ -54,7 +54,7 @@ export const imageReveal: Variants = {
   show: {
     opacity: 1,
     scale: 1,
-    transition: { duration: dur.slow, ease: easeOut },
+    transition: { duration: 0.65, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 

@@ -7,7 +7,7 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get('filmalisa_token')?.value
 
   if (token && (pathname === '/' || pathname === '/login')) {
-    return NextResponse.redirect(new URL('/movies', req.url))
+    return NextResponse.redirect(new URL('/home', req.url))
   }
 
   if (PUBLIC_ROUTES.includes(pathname)) {

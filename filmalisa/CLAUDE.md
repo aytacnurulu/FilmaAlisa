@@ -225,7 +225,7 @@ app/
 lib/
   api/                 # typed API client functions + request wrapper
   auth/                # cookie helpers, session utilities
-  validation/          # Zod schemas
+  validation/          # Yup schemas
 middleware.ts          # route protection (redirect if no token)
 components/            # shared UI
 ```

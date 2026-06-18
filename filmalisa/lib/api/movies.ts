@@ -1,34 +1,20 @@
+// lib/api/movies.ts
 import { useQuery } from "@tanstack/react-query";
+import { apiFetch } from "./client";
+import { Movie } from "../types/movies";
 
-export type Category = {
-  id: number;
-  name: string;
-};
-
-export type Movie = {
-  id: number;
-  title: string;
-  cover_url: string;
-  fragman: string;
-  watch_url: string;
-  adult: boolean;
-  run_time_min: number;
-  imdb: string;
-  overview: string;
-  created_at: string;
-  category: Category;
-};
-
-export async function getMovies(): Promise<Movie[]> {
-  const res = await fetch("/api/movies");
-  if (!res.ok) throw new Error("Failed to fetch movies");
-  const body = await res.json();
-  return body.data;
-}
+export const getMovies = () => apiFetch<Movie[]>("/api/movies");
 
 export function useMovies() {
+  return useQuery({ queryKey: ["movies"], queryFn: getMovies });
+}
+
+export const getMovie = (id: number): Promise<Movie> =>
+  apiFetch(`/api/movies/${id}`);
+
+export function useMovie(id: number) {
   return useQuery({
-    queryKey: ["movies"],
-    queryFn: getMovies,
+    queryKey: ["movie", id],
+    queryFn: () => getMovie(id),
   });
 }

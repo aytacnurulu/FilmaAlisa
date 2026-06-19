@@ -1,5 +1,3 @@
-// placeholder
-// placeholder
 import { proxyToFilmalisa } from "@/lib/api/proxy";
 
 const GET = () => {

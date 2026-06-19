@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { MovieCard } from "@/shared/components/ui/MovieCard";
+import { useFavorites, useToggleFavorite } from "@/lib/api/favorite";
 import { CategoryWithMovies } from "@/lib/types/category";
 
 type Props = {
@@ -13,6 +14,8 @@ type Props = {
 
 export default function CategoryRow({ category }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const toggle = useToggleFavorite();
+  const { data: favorites } = useFavorites();
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const router = useRouter();
@@ -67,7 +70,9 @@ export default function CategoryRow({ category }: Props) {
             <div key={movie.id} className="flex-shrink-0 w-40">
               <MovieCard
                 movie={movie}
+                isFavorite={favorites?.some((f) => f.id === movie.id) ?? false}
                 onClick={() => router.push(`/movies/${movie.id}`)}
+                onFavoriteToggle={(id) => toggle.mutate(id)}
               />
             </div>
           ))}

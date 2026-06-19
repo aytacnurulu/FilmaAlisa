@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Movie } from "@/lib/types/movies";
-import { MovieCard } from "@/shared/components/ui/MovieCard";
+import { SimilarMovieCard } from "./SimilarMovieCard";
 import { FiChevronRight } from "react-icons/fi";
 
 interface Props {
@@ -33,7 +33,7 @@ export default function SimilarMovies({ movies }: Props) {
               href={`/movies/${movie.id}`}
               className="flex-shrink-0 w-40 block"
             >
-              <MovieCard movie={movie} />
+              <SimilarMovieCard movie={movie} />
             </Link>
           ))}
         </div>

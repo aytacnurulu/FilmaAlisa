@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { MovieCard } from "@/shared/components/ui/MovieCard";
+import { useFavorites, useToggleFavorite } from "@/lib/api/favorite";
 import { Movie } from "@/lib/types/movies";
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
 export default function MovieGrid({ movies }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const toggle = useToggleFavorite();
+  const { data: favorites } = useFavorites();
 
   const search = searchParams.get("search") ?? "";
   const categoryParam = searchParams.get("category") ?? "";
@@ -63,7 +66,9 @@ export default function MovieGrid({ movies }: Props) {
         <MovieCard
           key={movie.id}
           movie={movie}
+          isFavorite={favorites?.some((f) => f.id === movie.id) ?? false}
           onClick={() => router.push(`/movies/${movie.id}`)}
+          onFavoriteToggle={(id) => toggle.mutate(id)}
         />
       ))}
     </div>

@@ -1,15 +1,17 @@
-// lib/types/movies.ts
+// movies.ts
 
-export type Category = {
-  id: number;
-  name: string;
-};
-// lib/types/actor.ts
 export type Actor = {
   id: number;
   name: string;
   surname: string;
   img_url: string;
+  created_at: string;
+};
+
+// Minimal category — only what's embedded inside a movie object
+type EmbeddedCategory = {
+  id: number;
+  name: string;
   created_at: string;
 };
 
@@ -24,6 +26,6 @@ export type Movie = {
   imdb: string;
   overview: string;
   created_at: string;
-  category: Category;
+  category: EmbeddedCategory; 
   actors: Actor[];
 };

@@ -6,7 +6,6 @@ import { FiMail } from "react-icons/fi";
 import { Input } from "@/shared/components/ui/Input";
 import { Button } from "@/shared/components/ui/Button";
 import { revealContainer, revealItem } from "@/shared/motion";
-
 export default function HeroSection() {
   // TODO: add hero email form state
 
@@ -14,7 +13,8 @@ export default function HeroSection() {
     <section className="relative overflow-hidden min-h-screen flex flex-col items-center justify-center px-4 lg:px-16 text-center">
       <Image
         fill
-        src="/filmalisaBacground.jpg"
+        priority
+        src="/filmalisaBackground.jpg"
         alt=""
         aria-hidden={true}
         className="object-cover object-center"

@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api/client";
-import { Category } from "@/lib/types/category";
+import { CategoryWithMovies } from "@/lib/types/category";
 
 const getCategories = () => {
-  return apiFetch<Category[]>("/api/categories");
+  return apiFetch<CategoryWithMovies[]>("/api/categories");
 };
 
 const useGetCategories = () => {

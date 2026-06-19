@@ -1,7 +1,7 @@
 // lib/api/movies.ts
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "./client";
-import { Movie } from "../types/movies";
+import { Movie } from "@/lib/types/movies";
 
 export const getMovies = () => apiFetch<Movie[]>("/api/movies");
 

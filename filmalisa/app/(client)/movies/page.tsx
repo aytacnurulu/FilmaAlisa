@@ -1,31 +1,30 @@
-"use client";
+import { Suspense } from "react";
+import { proxyToFilmalisa } from "@/lib/api/proxy";
+import { Movie } from "@/lib/types/movies";
+import { CategoryWithMovies } from "@/lib/types/category";
+import MovieGrid from "@/features/movies/components/MovieGrid";
+import MovieFilters from "@/features/movies/components/MovieFilters";
 
-import Image from "next/image";
-import { useMovies } from "@/lib/api/movies";
-import { LoadingSpinner } from "@/shared/components/ui/LoadingSpinner";
-import { ErrorMessage } from "@/shared/components/ui/ErrorMessage";
+export default async function MoviesPage() {
+  const [moviesRes, catsRes] = await Promise.all([
+    proxyToFilmalisa("/movies", "GET"),
+    proxyToFilmalisa("/categories", "GET"),
+  ]);
 
-export default function MoviesPage() {
-  const { data, isLoading, error } = useMovies();
+  const moviesData = await moviesRes.json();
+  const catsData = await catsRes.json();
 
-  if (isLoading) return <LoadingSpinner size="lg" label="Loading movies…" className="min-h-[60vh]" />;
-  if (error) return <ErrorMessage className="min-h-[60vh]" />;
+  const movies: Movie[] = moviesData.data;
+  const categories: CategoryWithMovies[] = catsData.data;
 
   return (
-    <div>
-      {data?.map((movie) => (
-        <div key={movie.id}>
-          <Image
-            src={movie.cover_url}
-            alt={movie.title}
-            width={300}
-            height={450}
-          />
-          <h3>{movie.title}</h3>
-          <p>IMDB: {movie.imdb}</p>
-          <p>{movie.category.name}</p>
-        </div>
-      ))}
-    </div>
+    <main className="px-6 py-8">
+      <Suspense>
+        <MovieFilters categories={categories} />
+      </Suspense>
+      <Suspense>
+        <MovieGrid movies={movies} />
+      </Suspense>
+    </main>
   );
 }

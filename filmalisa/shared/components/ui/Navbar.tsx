@@ -7,7 +7,7 @@ import { Logo } from "@/shared/components/ui/Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/movies", label: "Movies" },
+  { href: "/movies", label: "Search" },
   { href: "/favorites", label: "Favorites" },
   { href: "/contact", label: "Contact" },
 ];

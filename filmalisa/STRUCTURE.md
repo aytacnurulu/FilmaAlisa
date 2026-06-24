@@ -13,127 +13,116 @@ filmalisa/
 ├── app/
 │   ├── (admin)/
 │   │   ├── admin/
-│   │   │   ├── actors/page.tsx
-│   │   │   ├── categories/page.tsx
-│   │   │   ├── comments/page.tsx
-│   │   │   ├── contacts/page.tsx
-│   │   │   ├── dashboard/page.tsx
-│   │   │   ├── movies/page.tsx
-│   │   │   └── users/page.tsx
-│   │   └── layout.tsx
+│   │   │   ├── actors/page.tsx                               ← Admin actors CRUD page
+│   │   │   ├── categories/page.tsx                           ← Admin categories CRUD page
+│   │   │   ├── comments/page.tsx                             ← Admin comment moderation page
+│   │   │   ├── contacts/page.tsx                             ← Admin contact submissions page
+│   │   │   ├── dashboard/page.tsx                            ← Admin stats dashboard
+│   │   │   ├── movies/page.tsx                               ← Admin movies CRUD page
+│   │   │   └── users/page.tsx                                ← Admin users list page
+│   │   └── layout.tsx                                        ← Admin panel layout (sidebar + auth guard)
 │   ├── (auth)/
-│   │   ├── login/page.tsx
-│   │   ├── signup/page.tsx
-│   │   └── layout.tsx
+│   │   ├── login/page.tsx                                    ← Login form page
+│   │   ├── signup/page.tsx                                   ← Signup form page
+│   │   └── layout.tsx                                        ← Centered card layout for auth pages
 │   ├── (client)/
+│   │   ├── contact/page.tsx                                  ← Contact form page
+│   │   ├── favorites/page.tsx                                ← User's saved movies
+│   │   ├── home/page.tsx                                     ← Authenticated home with hero + categories
 │   │   ├── landing/
 │   │   │   └── _components/
-│   │   │       ├── ContactSection.tsx
-│   │   │       ├── FaqSection.tsx
-│   │   │       ├── FeatureSection.tsx
-│   │   │       ├── HeroSection.tsx
-│   │   │       ├── LandingFooter.tsx
-│   │   │       └── LandingNavbar.tsx
+│   │   │       ├── ContactSection.tsx                        ← Landing CTA contact section
+│   │   │       ├── FaqSection.tsx                            ← Landing FAQ accordion
+│   │   │       ├── FeatureSection.tsx                        ← Landing features section
+│   │   │       ├── HeroSection.tsx                           ← Landing hero banner
+│   │   │       ├── LandingFooter.tsx                         ← Landing footer
+│   │   │       └── LandingNavbar.tsx                         ← Landing navbar (unauthenticated)
 │   │   ├── movies/
-│   │   │   ├── [id]/page.tsx
-│   │   │   └── page.tsx
-│   │   ├── account/page.tsx        ← Profile edit page (GET + PUT /profile)
-│   │   ├── favorites/page.tsx
-│   │   ├── home/page.tsx
-│   │   ├── search/page.tsx
-│   │   ├── layout.tsx              ← Client layout: sidebar + main area
-│   │   └── page.tsx
+│   │   │   ├── [id]/page.tsx                                 ← Movie detail page
+│   │   │   └── page.tsx                                      ← Movies list with filters
+│   │   ├── profile/page.tsx                                  ← Profile view + edit form (GET + PUT /profile)
+│   │   ├── layout.tsx                                        ← Client layout: sidebar + main area
+│   │   └── page.tsx                                          ← Landing page (public, unauthenticated)
 │   ├── api/
 │   │   ├── admin/
-│   │   │   ├── actors/[id]/route.ts
-│   │   │   ├── actors/route.ts
-│   │   │   ├── categories/[id]/route.ts
-│   │   │   ├── categories/route.ts
-│   │   │   ├── comments/route.ts
-│   │   │   ├── contacts/[id]/route.ts
-│   │   │   ├── contacts/route.ts
-│   │   │   ├── dashboard/route.ts
-│   │   │   ├── movies/[id]/comment/[commentId]/route.ts
-│   │   │   ├── movies/[id]/route.ts
-│   │   │   ├── movies/route.ts
-│   │   │   └── users/route.ts
+│   │   │   ├── actors/
+│   │   │   │   ├── [id]/route.ts                             ← PUT/DELETE single actor
+│   │   │   │   └── route.ts                                  ← GET list / POST create actor
+│   │   │   ├── categories/
+│   │   │   │   ├── [id]/route.ts                             ← PUT/DELETE single category
+│   │   │   │   └── route.ts                                  ← GET list / POST create category
+│   │   │   ├── comments/route.ts                             ← GET all comments (admin moderation)
+│   │   │   ├── contacts/
+│   │   │   │   ├── [id]/route.ts                             ← DELETE single contact submission
+│   │   │   │   └── route.ts                                  ← GET all contact submissions
+│   │   │   ├── dashboard/route.ts                            ← GET aggregated dashboard stats
+│   │   │   ├── movies/
+│   │   │   │   ├── [id]/
+│   │   │   │   │   ├── comment/[commentId]/route.ts          ← DELETE comment (admin)
+│   │   │   │   │   └── route.ts                              ← GET/PUT/DELETE single movie
+│   │   │   │   └── route.ts                                  ← GET list / POST create movie
+│   │   │   └── users/route.ts                                ← GET all users
 │   │   ├── auth/
-│   │   │   ├── admin-login/route.ts
-│   │   │   ├── login/route.ts
-│   │   │   ├── logout/route.ts
-│   │   │   └── signup/route.ts
-│   │   ├── movie/[id]/favorite/route.ts   ← singular "movie" (toggle favorite)
+│   │   │   ├── admin-login/route.ts                          ← POST admin login, writes httpOnly cookie
+│   │   │   ├── login/route.ts                                ← POST client login, writes httpOnly cookie
+│   │   │   ├── logout/route.ts                               ← POST logout, clears cookie
+│   │   │   └── signup/route.ts                               ← POST new user registration
+│   │   ├── categories/route.ts                               ← GET categories (client)
+│   │   ├── contact/route.ts                                  ← POST contact form submission
+│   │   ├── movie/[id]/favorite/route.ts                      ← POST toggle favorite (singular "movie")
 │   │   ├── movies/
-│   │   │   ├── [id]/comment/[commentId]/route.ts
-│   │   │   ├── [id]/comments/route.ts
-│   │   │   ├── [id]/favorite/route.ts
-│   │   │   ├── [id]/route.ts
-│   │   │   ├── favorites/route.ts
-│   │   │   └── route.ts
-│   │   ├── categories/route.ts
-│   │   ├── contact/route.ts
-│   │   └── profile/route.ts               ← GET + PUT /profile
-│   ├── globals.css                         ← Tailwind v4 @theme design tokens
-│   ├── layout.tsx                          ← Root layout (Providers, fonts)
-│   ├── not-found.tsx
-│   ├── page.tsx
-│   └── providers.tsx                       ← TanStack QueryClientProvider
+│   │   │   ├── [id]/
+│   │   │   │   ├── comment/[commentId]/route.ts              ← DELETE own comment
+│   │   │   │   ├── comments/route.ts                         ← GET / POST comments for a movie
+│   │   │   │   ├── favorite/route.ts                         ← GET/POST favorite for a movie
+│   │   │   │   └── route.ts                                  ← GET single movie detail
+│   │   │   ├── favorites/route.ts                            ← GET user's favorited movies
+│   │   │   └── route.ts                                      ← GET all movies (with optional ?search)
+│   │   └── profile/route.ts                                  ← GET + PUT /profile
+│   ├── layout.tsx                                            ← Root layout (Providers, fonts)
+│   ├── not-found.tsx                                         ← 404 page
+│   ├── page.tsx                                              ← Root redirect to landing
+│   └── providers.tsx                                         ← TanStack QueryClientProvider
 ├── features/
+│   ├── contact/
+│   │   ├── components/
+│   │   │   └── ContactForm.tsx                               ← Contact form component (Formik + Yup)
+│   │   └── hooks/
+│   │       └── useSubmitContact.ts                           ← useMutation hook for contact submission
 │   ├── home/components/
-│   │   ├── CategoryRow.tsx
-│   │   ├── CategorySection.tsx
-│   │   └── HeroSlider.tsx
+│   │   ├── CategoryRow.tsx                                   ← Horizontal row of movies in a category
+│   │   ├── CategorySection.tsx                               ← All category rows combined
+│   │   └── HeroSlider.tsx                                    ← Auto-playing hero movie slider
 │   ├── movieDetail/components/
-│   │   ├── CommentSection.tsx
-│   │   ├── MetaItem.tsx
-│   │   ├── SimilarMovieCard.tsx
-│   │   └── SimilarMovies.tsx
+│   │   ├── CommentSection.tsx                                ← Comments list + add/delete
+│   │   ├── MetaItem.tsx                                      ← Single metadata badge (runtime, IMDB)
+│   │   ├── SimilarMovieCard.tsx                              ← Card for a similar movie
+│   │   └── SimilarMovies.tsx                                 ← Similar movies section on detail page
 │   └── movies/components/
-│       ├── MovieFilters.tsx
-│       └── MovieGrid.tsx
+│       ├── MovieFilters.tsx                                  ← Filter/sort controls for movies list
+│       └── MovieGrid.tsx                                     ← Responsive grid of MovieCards
 ├── lib/
 │   ├── api/
-│   │   ├── client.ts       ← apiFetch() — browser-only, calls /api/* routes
-│   │   ├── proxy.ts        ← proxyToFilmalisa() — server-only, calls Filmalisa API
-│   │   ├── index.ts
-│   │   ├── categories.ts   ← useGetCategories
-│   │   ├── comment.ts      ← useGetComments, useCreateComment, useDeleteComment
-│   │   ├── contact.ts      ← useSubmitContact
-│   │   ├── favorite.ts     ← useGetFavorites, useToggleFavorite
-│   │   ├── movies.ts       ← useGetMovies, useGetMovieById
-│   │   └── profile.ts      ← useGetProfile, useUpdateProfile
+│   │   ├── categories.ts                                     ← useGetCategories hook
+│   │   ├── client.ts                                         ← apiFetch() — browser-only, calls /api/* routes
+│   │   ├── comment.ts                                        ← useGetComments, useCreateComment, useDeleteComment
+│   │   ├── contact.ts                                        ← useSubmitContact hook
+│   │   ├── favorite.ts                                       ← useGetFavorites, useToggleFavorite
+│   │   ├── index.ts                                          ← Re-exports all lib/api hooks
+│   │   ├── movies.ts                                         ← useGetMovies, useGetMovieById
+│   │   ├── profile.ts                                        ← useGetProfile, useUpdateProfile
+│   │   └── proxy.ts                                          ← proxyToFilmalisa() — server-only, calls Filmalisa API
 │   ├── auth/
-│   │   └── index.ts        ← getTokenFromCookie(), session helpers
+│   │   └── index.ts                                          ← getTokenFromCookie(), session helpers
 │   ├── types/
-│   │   ├── category.ts
-│   │   ├── comment.ts
-│   │   ├── contact.ts
-│   │   ├── movies.ts
-│   │   └── profile.ts      ← Profile, UpdateProfilePayload
+│   │   ├── category.ts                                       ← Category type
+│   │   ├── comment.ts                                        ← Comment type
+│   │   ├── contact.ts                                        ← Contact type
+│   │   ├── movies.ts                                         ← Movie, Actor types
+│   │   └── profile.ts                                        ← Profile, UpdateProfilePayload types
 │   └── validation/
-│       └── index.ts        ← Yup schemas
-├── shared/
-│   ├── components/
-│   │   ├── ui/
-│   │   │   ├── Accordion.tsx
-│   │   │   ├── Badge.tsx
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── ErrorMessage.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── LoadingSpinner.tsx
-│   │   │   ├── Logo.tsx
-│   │   │   ├── MovieCard.tsx
-│   │   │   ├── Navbar.tsx
-│   │   │   ├── PasswordInput.tsx    ← already has show/hide toggle built in
-│   │   │   └── Rating.tsx
-│   │   └── LogoutButton.tsx
-│   ├── data/
-│   │   └── faq.ts
-│   ├── lib/
-│   │   └── cn.ts                   ← clsx + tailwind-merge utility
-│   └── motion.ts                   ← Framer Motion presets (calm scroll reveals only)
-└── middleware.ts                   ← Route protection, redirects to /login
+│       └── index.ts                                          ← Yup schemas (login, signup, profile, contact)
+└── middleware.ts                                             ← Route protection, redirects to /login
 ```
 
 ---
@@ -245,10 +234,11 @@ import { ... } from "@/features/home/components/HeroSlider";
 - [x] Home page: CategoryRow, CategorySection, HeroSlider
 - [x] Movie list page + movie detail page + CommentSection
 - [x] Design system: globals.css tokens, DESIGN.md, DESIGN-admin.md, shared/motion.ts
+- [x] Profile page (`app/(client)/profile/page.tsx`) — view + edit form (GET + PUT /profile)
+- [x] Favorites page (`app/(client)/favorites/page.tsx`) — user's saved movies
+- [x] Contact page (`app/(client)/contact/page.tsx`) + ContactForm feature component
 
 ## What is not yet built
 
-- [ ] `app/(client)/account/page.tsx` — profile view + edit form
-- [ ] `app/(client)/favorites/page.tsx` — user's saved movies
 - [ ] `app/(client)/search/page.tsx` — search results
 - [ ] Admin panel pages (Phase 4 — scaffolded but empty)

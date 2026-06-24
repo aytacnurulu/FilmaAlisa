@@ -228,6 +228,9 @@ interface AdminCategory {
 interface AdminActor {
   id: number;
   name: string;
+  surname: string;
+  img_url: string | null;
+  created_at: string;
 }
 
 interface AdminMovie {
@@ -268,13 +271,15 @@ interface AdminContact {
   reason: string;
   created_at: string;
 }
-
 interface DashboardStats {
   movies: number;
   categories: number;
+  actors: number;
   users: number;
+  comments: number;
+  contacts: number;
+  favorites: number;
 }
-
 // Mutation payloads
 interface CreateMoviePayload {
   title: string;
@@ -295,6 +300,8 @@ interface CreateCategoryPayload {
 
 interface CreateActorPayload {
   name: string;
+  surname: string;
+  img_url: string;
 }
 ```
 

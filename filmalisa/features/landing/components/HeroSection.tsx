@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiMail } from "react-icons/fi";
 import { Input } from "@/shared/components/ui/Input";
@@ -53,9 +54,11 @@ export default function HeroSection() {
               placeholder="Email address"
             />
           </div>
-          <Button variant="primary" size="md" type="submit">
-            Get Started →
-          </Button>
+          <Link href="/login">
+            <Button variant="primary" size="md" type="button">
+              Get Started →
+            </Button>
+          </Link>
         </motion.form>
       </motion.div>
     </section>

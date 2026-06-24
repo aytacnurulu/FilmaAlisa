@@ -211,7 +211,7 @@ All mutations call `queryClient.invalidateQueries(['admin-movies'])` on success.
 | `/api/admin/categories/[id]` | PUT | `PUT /admin/category/[id]` |
 | `/api/admin/categories/[id]` | DELETE | `DELETE /admin/category/[id]` |
 | `/api/admin/actors` | GET | `GET /admin/actors` |
-| `/api/admin/actors` | POST | `POST /admin/actors` |
+| `/api/admin/actors` | POST | `POST /admin/actor` |
 | `/api/admin/actors/[id]` | PUT | `PUT /admin/actor/[id]` |
 | `/api/admin/actors/[id]` | DELETE | `DELETE /admin/actor/[id]` |
 | `/api/admin/users` | GET | `GET /admin/users` |

@@ -5,7 +5,7 @@ import { CategoryWithMovies } from "@/lib/types/category";
 import MovieGrid from "@/features/movies/components/MovieGrid";
 import MovieFilters from "@/features/movies/components/MovieFilters";
 
-export default async function MoviesPage({
+export default async function SearchPage({
   searchParams,
 }: {
   searchParams: Promise<{ search?: string; category?: string; sort?: string }>;
@@ -38,14 +38,14 @@ export default async function MoviesPage({
   if (params.sort === "oldest") {
     filtered.sort(
       (a, b) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
     );
   } else if (params.sort === "imdb") {
     filtered.sort((a, b) => parseFloat(b.imdb) - parseFloat(a.imdb));
   } else {
     filtered.sort(
       (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     );
   }
 

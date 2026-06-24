@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiSearch } from "react-icons/fi";
 import { Logo } from "@/shared/components/ui/Logo";
+import NavbarProfile from "@/shared/components/ui/NavbarProfile";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -30,9 +31,7 @@ export default function Navbar() {
                 <Link
                   href={href}
                   className={`text-sm font-medium transition-colors duration-[180ms] ${
-                    isActive
-                      ? "text-accent"
-                      : "text-text-muted hover:text-text"
+                    isActive ? "text-accent" : "text-text-muted hover:text-text"
                   }`}
                 >
                   {label}
@@ -43,23 +42,7 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-5">
-          <Link
-            href="/search"
-            aria-label="Search"
-            className="text-text-muted transition-colors duration-[180ms] hover:text-text"
-          >
-            <FiSearch size={20} />
-          </Link>
-          <Link
-            href="/profile"
-            className={`text-sm font-medium transition-colors duration-[180ms] ${
-              pathname === "/profile"
-                ? "text-accent"
-                : "text-text-muted hover:text-text"
-            }`}
-          >
-            Profile
-          </Link>
+          <NavbarProfile />
         </div>
       </div>
     </nav>

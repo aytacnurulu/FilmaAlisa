@@ -11,7 +11,7 @@ import { ErrorMessage } from "@/shared/components/ui/ErrorMessage";
 import { cn } from "@/shared/lib/cn";
 import { FiLink2, FiUser, FiMail } from "react-icons/fi";
 
-export default function AccountPage() {
+export default function ProfilePage() {
   const { data: profile, isLoading } = useGetProfile();
   const { mutate, isPending, isError, error } = useUpdateProfile();
 

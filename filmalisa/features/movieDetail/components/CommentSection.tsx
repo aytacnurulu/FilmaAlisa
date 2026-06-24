@@ -26,6 +26,7 @@ function formatDate(iso: string): string {
 
 export default function CommentSection({ movieId, initialComments }: Props) {
   const [text, setText] = useState("");
+  const [myCommentIds, setMyCommentIds] = useState<Set<number>>(new Set());
   const id = Number(movieId);
 
   const { data: comments = initialComments } = useComments(id);
@@ -35,7 +36,14 @@ export default function CommentSection({ movieId, initialComments }: Props) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!text.trim() || addMutation.isPending) return;
-    addMutation.mutate(text.trim(), { onSuccess: () => setText("") });
+    addMutation.mutate(text.trim(), {
+      onSuccess: (newComment) => {
+        setText("");
+        if (newComment?.id) {
+          setMyCommentIds((prev) => new Set([...prev, newComment.id]));
+        }
+      },
+    });
   }
 
   return (
@@ -100,29 +108,31 @@ export default function CommentSection({ movieId, initialComments }: Props) {
                   </p>
                 </div>
 
-                <Button
-                  variant="ghost"
-                  onClick={() => deleteMutation.mutate(comment.id)}
-                  disabled={
-                    deleteMutation.isPending &&
-                    deleteMutation.variables === comment.id
-                  }
-                  className="flex-shrink-0 opacity-0 group-hover:opacity-100 h-auto p-1.5 text-danger"
-                  aria-label="Delete comment"
-                >
-                  {deleteMutation.isPending &&
-                  deleteMutation.variables === comment.id ? (
-                    <span
-                      className="block w-4 h-4 border-2 rounded-full animate-spin"
-                      style={{
-                        borderColor: "var(--color-danger)",
-                        borderTopColor: "transparent",
-                      }}
-                    />
-                  ) : (
-                    <FiTrash2 size={15} />
-                  )}
-                </Button>
+                {myCommentIds.has(comment.id) && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => deleteMutation.mutate(comment.id)}
+                    disabled={
+                      deleteMutation.isPending &&
+                      deleteMutation.variables === comment.id
+                    }
+                    className="flex-shrink-0 opacity-0 group-hover:opacity-100 h-auto p-1.5 text-danger"
+                    aria-label="Delete comment"
+                  >
+                    {deleteMutation.isPending &&
+                    deleteMutation.variables === comment.id ? (
+                      <span
+                        className="block w-4 h-4 border-2 rounded-full animate-spin"
+                        style={{
+                          borderColor: "var(--color-danger)",
+                          borderTopColor: "transparent",
+                        }}
+                      />
+                    ) : (
+                      <FiTrash2 size={15} />
+                    )}
+                  </Button>
+                )}
               </div>
             ))
           )}

@@ -5,7 +5,7 @@ import { Movie } from "../types/movies";
 const getFavorites = () => apiFetch<Movie[]>("/api/movies/favorites");
 
 const addFavorite = (id: string) =>
-  apiFetch<void>(`/api/movie/${id}/favorite`, { method: "POST" });
+  apiFetch<void>(`/api/movies/${id}/favorite`, { method: "POST" });
 
 const useFavorites = () =>
   useQuery({ queryKey: ["favorites"], queryFn: getFavorites });

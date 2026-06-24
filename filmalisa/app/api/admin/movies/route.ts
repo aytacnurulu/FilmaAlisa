@@ -1,17 +1,10 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-
-const BASE_URL = "https://api.sarkhanrahimli.dev/api/filmalisa";
+import { proxyToFilmalisa } from "@/lib/api/proxy";
 
 export async function GET() {
-  const token = (await cookies()).get("token")?.value;
+  return proxyToFilmalisa("/admin/movies", "GET");
+}
 
-  const res = await fetch(`${BASE_URL}/movies`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const data = await res.json();
-  return NextResponse.json(data);
+export async function POST(request: Request) {
+  const body = await request.json();
+  return proxyToFilmalisa("/admin/movies", "POST", body);
 }

@@ -2,6 +2,11 @@ import { proxyToFilmalisa } from "@/lib/api/proxy";
 
 type Params = { params: Promise<{ id: string }> };
 
+export async function GET(_: Request, context: Params) {
+  const { id } = await context.params;
+  return proxyToFilmalisa(`/admin/movies/${id}`, "GET");
+}
+
 export async function PUT(request: Request, context: Params) {
   const { id } = await context.params;
   const body = await request.json();

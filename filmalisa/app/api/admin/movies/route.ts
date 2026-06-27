@@ -6,5 +6,5 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  return proxyToFilmalisa("/admin/movies", "POST", body);
+  return proxyToFilmalisa("/admin/movie", "POST", body);
 }

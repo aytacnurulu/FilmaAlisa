@@ -5,6 +5,7 @@ import type {
   CreateActorPayload,
   UpdateActorPayload,
 } from "@/lib/admin/types/admin";
+import { adminFetch } from "@/lib/admin/adminFetch";
 
 const QUERY_KEY = ["admin-actors"];
 
@@ -12,9 +13,7 @@ export function useAdminActors() {
   return useQuery<AdminActor[]>({
     queryKey: QUERY_KEY,
     queryFn: async () => {
-      const res = await fetch("/api/admin/actors");
-      if (!res.ok) throw new Error("Failed to fetch actors");
-      const json = await res.json();
+      const json = await adminFetch<{ data: AdminActor[] }>("/api/admin/actors");
       return json.data;
     },
   });
@@ -23,15 +22,11 @@ export function useAdminActors() {
 export function useCreateActor() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: CreateActorPayload) => {
-      const res = await fetch("/api/admin/actors", {
+    mutationFn: (payload: CreateActorPayload) =>
+      adminFetch("/api/admin/actors", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Failed to create actor");
-      return res.json();
-    },
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },
@@ -41,21 +36,11 @@ export function useCreateActor() {
 export function useUpdateActor() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({
-      id,
-      payload,
-    }: {
-      id: number;
-      payload: UpdateActorPayload;
-    }) => {
-      const res = await fetch(`/api/admin/actors/${id}`, {
+    mutationFn: ({ id, payload }: { id: number; payload: UpdateActorPayload }) =>
+      adminFetch(`/api/admin/actors/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Failed to update actor");
-      return res.json();
-    },
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },
@@ -65,13 +50,8 @@ export function useUpdateActor() {
 export function useDeleteActor() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (id: number) => {
-      const res = await fetch(`/api/admin/actors/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete actor");
-      return res.json();
-    },
+    mutationFn: (id: number) =>
+      adminFetch(`/api/admin/actors/${id}`, { method: "DELETE" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },

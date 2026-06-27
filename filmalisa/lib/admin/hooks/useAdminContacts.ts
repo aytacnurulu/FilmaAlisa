@@ -1,6 +1,7 @@
 "use client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AdminContact } from "@/lib/admin/types/admin";
+import { adminFetch } from "@/lib/admin/adminFetch";
 
 const QUERY_KEY = ["admin-contacts"];
 
@@ -8,9 +9,7 @@ export function useAdminContacts() {
   return useQuery<AdminContact[]>({
     queryKey: QUERY_KEY,
     queryFn: async () => {
-      const res = await fetch("/api/admin/contacts");
-      if (!res.ok) throw new Error("Failed to fetch contacts");
-      const json = await res.json();
+      const json = await adminFetch<{ data: AdminContact[] }>("/api/admin/contacts");
       return json.data;
     },
   });
@@ -19,13 +18,8 @@ export function useAdminContacts() {
 export function useDeleteContact() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (id: number) => {
-      const res = await fetch(`/api/admin/contacts/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete contact");
-      return res.json();
-    },
+    mutationFn: (id: number) =>
+      adminFetch(`/api/admin/contacts/${id}`, { method: "DELETE" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },

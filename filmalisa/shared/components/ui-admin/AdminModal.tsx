@@ -42,7 +42,7 @@ export default function AdminModal({
           </button>
         </div>
 
-        <div className="px-6 py-5 space-y-4">{children}</div>
+        <div className="px-6 py-5 space-y-4 overflow-y-auto max-h-[60vh]">{children}</div>
 
         {footer && (
           <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#2a2a2a]">

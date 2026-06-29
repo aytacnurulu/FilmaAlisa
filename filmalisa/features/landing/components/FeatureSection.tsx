@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { revealContainer, revealItem, imageReveal } from "@/shared/motion";
 
@@ -53,11 +52,9 @@ export default function FeatureSection({
           viewport={{ once: true, amount: 0.3 }}
           className={`flex justify-center ${imageOrder}`}
         >
-          <Image
+          <img
             src={imageSrc}
             alt={imageAlt}
-            width={560}
-            height={420}
             style={{ width: "100%", height: "auto" }}
           />
         </motion.div>
